@@ -32,7 +32,7 @@ export function Sidebar({
 
   const isMobile = useIsMobile()
 
-  // Handle keyboard shortcuts
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
@@ -71,7 +71,10 @@ export function Sidebar({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Collapse/Expand button */}
+          
+
+
+
           <button
             className="absolute -right-3 top-4 z-20 h-6 w-6 rounded-full border bg-background flex items-center justify-center shadow-sm hover:bg-muted transition-colors"
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -180,41 +183,13 @@ export function Sidebar({
       className={`relative h-full flex flex-col transition-all duration-300 ease-in-out ${
         isCollapsed ? "w-12" : "w-64"
       }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Collapse/Expand button */}
-      <button
-        className="absolute -right-3 top-4 z-20 h-6 w-6 rounded-full border bg-background flex items-center justify-center shadow-sm hover:bg-muted transition-colors"
-        onClick={() => setIsCollapsed(!isCollapsed)}
-      >
-        {isCollapsed ? (
-          <ChevronRight className="h-4 w-4" />
-        ) : (
-          <ChevronLeft className="h-4 w-4" />
-        )}
-      </button>
-
-      <div className={`border-r bg-card h-full flex flex-col overflow-hidden ${
-        isCollapsed ? "border-r-0" : ""
-      }`}>
-        <div className="p-4 border-b">
-          {isCollapsed ? (
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="w-full" 
-              onClick={onNewChat}
-              title="New Chat"
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
-          ) : (
-            <Button className="w-full" onClick={onNewChat}>
-              <Plus className="h-4 w-4 mr-2" />
-              New Chat
-            </Button>
-          )}
+      <div className={`bg-background/80 backdrop-blur-sm border-r border-border/50 h-full flex flex-col overflow-hidden`}>
+        <div className="p-4 border-b border-border/50">
+          <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700" onClick={onNewChat}>
+            <Plus className="h-4 w-4 mr-2" />
+            New Chat
+          </Button>
         </div>
         
         <div className="flex-1 overflow-y-auto p-2">

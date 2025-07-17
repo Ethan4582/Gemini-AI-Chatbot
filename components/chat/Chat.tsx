@@ -7,8 +7,6 @@ import { ChatHeader } from "@/components/chat/ChatHeader"
 import { ChatMessages } from "@/components/chat/ChatMessages"
 import { ChatInput } from "@/components/chat/ChatInput"
 import { ChatSession, Message } from "@/types/chat"
-import { Button } from "../ui/button"
-import { Sun, Moon } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
 
 
@@ -37,7 +35,7 @@ export default function Chat() {
   const scrollAreaRef = useRef<HTMLDivElement>(null)
   const { theme, setTheme } = useTheme()
 
-  // Persist sessions to localStorage
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("chat-sessions", JSON.stringify(chatSessions))
@@ -105,7 +103,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       if (done) break
 
       const chunk = decoder.decode(value, { stream: true })
-      // Clean the chunk by removing "data: " prefix if present
+    
       const cleanedChunk = chunk.startsWith("data: ") ? chunk.slice(6) : chunk
       assistantMessage += cleanedChunk
       setStreamingMessage(assistantMessage)
@@ -136,6 +134,21 @@ const handleSubmit = async (e: React.FormEvent) => {
     setChatSessions(prev => prev.map(s => 
       s.id === activeSessionId ? { ...s, messages: newMessages } : s
     ))
+  }
+
+  const handleUpdateMessage = (messageId: string, newContent: string) => {
+    setChatSessions(prev =>
+      prev.map(session =>
+        session.id === activeSessionId
+          ? {
+              ...session,
+              messages: session.messages.map(msg =>
+                msg.id === messageId ? { ...msg, content: newContent } : msg
+              ),
+            }
+          : session
+      )
+    )
   }
 
   const clearChat = () => {
@@ -199,7 +212,13 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-background">
+    <div className="flex flex-col md:flex-row h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900 relative">
+    
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.1),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(93,95,239,0.1),rgba(0,0,0,0))]" />
+      </div>
+      
+     
       <Sidebar
         chatSessions={chatSessions}
         activeSessionId={activeSessionId}
@@ -209,7 +228,8 @@ const handleSubmit = async (e: React.FormEvent) => {
         onRenameChat={handleRenameChat}
       />
 
-      <div className="flex-1 flex flex-col min-h-0">
+      
+      <div className="flex-1 flex flex-col min-h-0 z-10">
         <ChatHeader
           title={activeSession.name}
           hasMessages={messages.length > 0 || !!streamingMessage}
@@ -224,6 +244,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             isLoading={isLoading}
             onCopyMessage={copyMessage}
             onSetExample={handleSetExample}
+            onUpdateMessage={handleUpdateMessage} 
           />
         </div>
 
@@ -246,15 +267,6 @@ const handleSubmit = async (e: React.FormEvent) => {
           </div>
         )}
       </div>
-
-      <Button
-        variant="ghost"
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        aria-label="Toggle theme"
-        className="ml-2"
-      >
-        {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-      </Button>
     </div>
   )
 }

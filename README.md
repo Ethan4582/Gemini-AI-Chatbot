@@ -1,7 +1,5 @@
 # Gemini AI Chatbot
 
-![Gemini AI Chatbot Demo](https://i.imgur.com/JQhX3lS.png) <!-- Add a demo screenshot here -->
-
 A modern, responsive chatbot interface powered by Google's Gemini AI, built with Next.js 14+ and featuring real-time streaming responses.
 
 ## ✨ Key Features
@@ -88,6 +86,7 @@ A modern, responsive chatbot interface powered by Google's Gemini AI, built with
 │   ├── page.tsx               # Main chat interface
 │   └── globals.css            # Global styles
 ├── components/
+|── |── chat                   # Chat UI components
 │   ├── ui/                    # Shadcn UI components
 │   └── theme-provider.tsx     # Theme provider component
 ├── lib/
@@ -116,54 +115,6 @@ Handles chat messages and returns streaming responses from Gemini AI.
 **Response:**
 Streaming text response in Server-Sent Events format.
 
-## Features Implementation
-
-### Streaming Responses
-- Uses ReadableStream for real-time response streaming
-- Implements Server-Sent Events format
-- Shows typing indicator during generation
-
-### Error Handling
-- Graceful API error handling
-- User-friendly error messages
-- Connection failure recovery
-
-### State Management
-- React hooks for chat history
-- Loading states management
-- Message persistence during session
-
-### UI/UX Features
-- Auto-scroll to latest messages
-- Message timestamps
-- Copy message functionality
-- Responsive design for all screen sizes
-- Dark/light mode toggle
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add your `GEMINI_API_KEY` environment variable in Vercel dashboard
-4. Deploy!
-
-### Other Platforms
-
-The app can be deployed on any platform that supports Next.js:
-- Netlify
-- Railway
-- Render
-- AWS Amplify
-
-## Environment Variables
-
-Create a `.env.local` file with:
-
-```
-GEMINI_API_KEY=your_gemini_api_key_here
-```
 
 ## Contributing
 

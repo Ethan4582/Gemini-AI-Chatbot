@@ -1,9 +1,8 @@
-
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Send } from "lucide-react"
+
+
 
 interface ChatInputProps {
   input: string
@@ -19,34 +18,25 @@ export function ChatInput({
   onSubmit,
 }: ChatInputProps) {
   return (
-    <div className="border-t bg-card p-4">
+    <div className="border-t bg-background/80 backdrop-blur-sm p-4">
       <form onSubmit={onSubmit} className="max-w-3xl mx-auto">
-        <div className="relative flex items-center">
-          <Input
+        <div className="flex gap-2">
+          <input
+            type="text"
             value={input}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="Message Gemini..."
+            placeholder="Type a message..."
+            className="flex-1 rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             disabled={isLoading}
-            className="pr-12"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault()
-                onSubmit(e)
-              }
-            }}
           />
           <Button
             type="submit"
-            size="icon"
             disabled={isLoading || !input.trim()}
-            className="absolute right-2"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
           >
-            <Send className="h-4 w-4" />
+            Send
           </Button>
         </div>
-        <p className="text-xs text-muted-foreground mt-2 text-center">
-          Gemini may produce inaccurate information. Consider verifying important details.
-        </p>
       </form>
     </div>
   )
