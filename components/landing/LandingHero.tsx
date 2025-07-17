@@ -49,9 +49,11 @@ export function LandingHero({ controls }: { controls: any }) {
                 <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Button variant="outline" size="lg" className="px-8 py-6 text-base">
-              View on GitHub
-            </Button>
+            <Link href="https://github.com/Ethan4582/Gemini-AI-Chatbot" target="_blank" rel="noopener noreferrer">
+  <Button variant="outline" size="lg" className="px-8 py-6 text-base">
+    View on GitHub
+  </Button>
+</Link>
           </motion.div>
         </div>
       </div>
